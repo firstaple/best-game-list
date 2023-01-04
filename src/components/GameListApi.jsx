@@ -16,6 +16,7 @@ const GameListApi = () => {
   useEffect(() => {
     getGame();
   }, []);
+  console.log(games);
 
   return (
     <>
@@ -24,7 +25,13 @@ const GameListApi = () => {
           <span>Loading...</span>
         </div>
       ) : (
-        <div>2</div>
+        <div>
+          {games.map((games) => (
+            <div>
+              <Game games={games} />
+            </div>
+          ))}
+        </div>
       )}
     </>
   );
