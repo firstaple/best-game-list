@@ -4,6 +4,7 @@ import Game from "./Game";
 const GameListApi = () => {
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
+  const [next, setNext] = useState();
   const getGame = async () => {
     const json = await (
       await fetch(`
@@ -11,12 +12,12 @@ const GameListApi = () => {
       `)
     ).json();
     setGames(json.results);
+    setNext(json.next);
     setLoading(false);
   };
   useEffect(() => {
     getGame();
   }, []);
-  console.log(games);
 
   return (
     <>
@@ -27,12 +28,13 @@ const GameListApi = () => {
       ) : (
         <div>
           {games.map((games) => (
-            <div>
+            <div key={games.id}>
               <Game games={games} />
             </div>
           ))}
         </div>
       )}
+      <a href={next}>next</a>
     </>
   );
 };
