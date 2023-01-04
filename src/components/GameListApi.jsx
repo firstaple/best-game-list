@@ -7,7 +7,7 @@ const GameListApi = () => {
   const getGame = async () => {
     const json = await (
       await fetch(`
-      https://api.rawg.io/api/platforms?key=bd1a96395fad40d3a2337b3ff3c01116
+      https://api.rawg.io/api/games?key=bd1a96395fad40d3a2337b3ff3c01116&dates=2019-09-01,2019-09-30&platforms=18,1,7
       `)
     ).json();
     setGames(json.results);
@@ -24,11 +24,7 @@ const GameListApi = () => {
           <span>Loading...</span>
         </div>
       ) : (
-        <div>
-          {games.map((game) => (
-            <Game games={game.games} />
-          ))}
-        </div>
+        <div>2</div>
       )}
     </>
   );
