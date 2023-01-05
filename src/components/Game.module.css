@@ -1,7 +1,9 @@
 .container {
+  display: inline-block;
+  width: 60%;
   height: 200px;
   margin: 20px;
-  border: solid 1px black;
+  border-top: solid 1px black;
 }
 
 .title {
@@ -9,17 +11,21 @@
   width: fit-content;
   background-color: white;
   bottom: 40px;
+  left: 30px;
   text-align: left;
+  padding: 0 10px;
 }
 
 .flex_box {
+  position: relative;
+  left: 40px;
   display: flex;
 }
 
 .img_container {
   position: relative;
   bottom: 62px;
-  width: 400px;
+  width: 300px;
   height: 100%;
 }
 
@@ -29,8 +35,22 @@
 }
 
 .flex_direction {
-  position: relative;
-  bottom: 70px;
   display: flex;
   flex-direction: column;
+}
+
+.flex_content {
+  position: relative;
+  display: flex;
+  height: fit-content;
+  margin-left: 20px;
+  bottom: 60px;
+}
+
+.flex_content h3 {
+  margin: 0;
+}
+
+.flex_content span {
+  margin-left: 10px;
 }
