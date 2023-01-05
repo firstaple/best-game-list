@@ -4,20 +4,36 @@ import Game from "./Game";
 const GameListApi = () => {
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
-  const [next, setNext] = useState();
-  const getGame = async () => {
+  const [api] = useState(
+    "https://api.rawg.io/api/games?key=bd1a96395fad40d3a2337b3ff3c01116&dates=2019-09-01,2019-09-30&platforms=18,1,7"
+  );
+  const [nextApi, setNextApi] = useState();
+  const [preApi, setPreApi] = useState();
+
+  const getGame = async (api) => {
     const json = await (
       await fetch(`
-      https://api.rawg.io/api/games?key=bd1a96395fad40d3a2337b3ff3c01116&dates=2019-09-01,2019-09-30&platforms=18,1,7
+      ${api}
       `)
     ).json();
+    setNextApi(json.next);
+    setPreApi(json.previous);
     setGames(json.results);
-    setNext(json.next);
     setLoading(false);
   };
   useEffect(() => {
-    getGame();
+    getGame(api);
   }, []);
+
+  const previous = () => {
+    setLoading(true);
+    getGame(preApi);
+  };
+
+  const next = () => {
+    setLoading(true);
+    getGame(nextApi);
+  };
 
   return (
     <>
@@ -34,7 +50,14 @@ const GameListApi = () => {
           ))}
         </div>
       )}
-      <a href={next}>next</a>
+      {preApi ? (
+        <div>
+          <button onClick={previous}>previous</button>
+          <button onClick={next}>next</button>
+        </div>
+      ) : (
+        <button onClick={next}>next</button>
+      )}
     </>
   );
 };
