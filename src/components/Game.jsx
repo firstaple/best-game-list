@@ -1,20 +1,24 @@
+import styles from "./Game.module.css";
+
 const Game = ({ games }) => {
   return (
-    <div>
-      <h2>Title: {games.name}</h2>
-      <img
-        src={games.background_image}
-        alt=""
-        style={{ width: "300px", height: " 150px" }}
-      />
-      <p>rating: {games.rating}</p>
-      <p>metacritic: {games.metacritic}</p>
-      {games.platforms.map((platforms) => (
-        <p key={platforms.platform.id}>platforms: {platforms.platform.name}</p>
-      ))}
-      {games.genres.map((genres) => (
-        <p key={genres.id}>genres: {genres.name}</p>
-      ))}
+    <div className={styles.container}>
+      <h2 className={styles.title}>Title: {games.name}</h2>
+      <div className={styles.flex_box}>
+        <div className={styles.img_container}>
+          <img className={styles.img} src={games.background_image} alt="" />
+        </div>
+        <div className={styles.flex_direction}>
+          <span>rating: {games.rating}</span>
+          <span>metacritic: {games.metacritic}</span>
+          {games.platforms.map((platforms) => (
+            <span key={platforms.platform.id}>{platforms.platform.name}</span>
+          ))}
+          {games.genres.map((genres) => (
+            <span key={genres.id}> {genres.name}</span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

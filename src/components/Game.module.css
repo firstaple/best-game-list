@@ -1,0 +1,36 @@
+.container {
+  height: 200px;
+  margin: 20px;
+  border: solid 1px black;
+}
+
+.title {
+  position: relative;
+  width: fit-content;
+  background-color: white;
+  bottom: 40px;
+  text-align: left;
+}
+
+.flex_box {
+  display: flex;
+}
+
+.img_container {
+  position: relative;
+  bottom: 62px;
+  width: 400px;
+  height: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 190px;
+}
+
+.flex_direction {
+  position: relative;
+  bottom: 70px;
+  display: flex;
+  flex-direction: column;
+}
