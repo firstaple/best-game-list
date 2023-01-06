@@ -9,6 +9,7 @@ const GameListApi = () => {
   );
   const [nextApi, setNextApi] = useState();
   const [preApi, setPreApi] = useState();
+  const [search, setSearch] = useState();
 
   const getGame = async (api) => {
     const json = await (
@@ -35,28 +36,46 @@ const GameListApi = () => {
     getGame(nextApi);
   };
 
+  const searchBar = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const findGame = games.filter((title) =>
+    title.name.includes(search) ? title.name : ""
+  );
+
   return (
     <>
+      {nextApi === null ? (
+        <button onClick={previous}>previous</button>
+      ) : preApi === null ? (
+        <button onClick={next}>next</button>
+      ) : (
+        <div>
+          <button onClick={previous}>previous</button>
+          <button onClick={next}>next</button>
+        </div>
+      )}
+
       {loading ? (
         <div>
           <span>Loading...</span>
         </div>
       ) : (
         <div>
-          {games.map((games) => (
-            <div key={games.id}>
-              <Game games={games} />
-            </div>
-          ))}
+          <input type="text" value={search || ""} onChange={searchBar} />
+          {search
+            ? findGame.map((games) => (
+                <div key={games.id}>
+                  <Game games={games} />
+                </div>
+              ))
+            : games.map((games) => (
+                <div key={games.id}>
+                  <Game games={games} />
+                </div>
+              ))}
         </div>
-      )}
-      {preApi ? (
-        <div>
-          <button onClick={previous}>previous</button>
-          <button onClick={next}>next</button>
-        </div>
-      ) : (
-        <button onClick={next}>next</button>
       )}
     </>
   );
