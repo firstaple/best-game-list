@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Game from "./Game";
 
 const GameListApi = () => {
+  const key = "bd1a96395fad40d3a2337b3ff3c01116";
+
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [api] = useState(
-    "https://api.rawg.io/api/games?key=bd1a96395fad40d3a2337b3ff3c01116&metacritic=80,100&page_size=40&"
+    `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&key=${key}`
   );
   const [nextApi, setNextApi] = useState();
   const [preApi, setPreApi] = useState();
@@ -22,8 +24,10 @@ const GameListApi = () => {
     setGames(json.results);
     setLoading(false);
   };
+
   useEffect(() => {
     getGame(api);
+    // getDetails();
   }, []);
 
   const previous = () => {
@@ -38,11 +42,17 @@ const GameListApi = () => {
 
   const searchBar = (e) => {
     setSearch(e.target.value);
+    const findGame = async () => {
+      const json = await (
+        await fetch(
+          `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&search=${search}&key=${key}`
+        )
+      ).json();
+      setGames(json.results);
+      setLoading(false);
+    };
+    findGame();
   };
-
-  const findGame = games.filter((title) =>
-    title.name.includes(search) ? title.name : ""
-  );
 
   return (
     <>
@@ -64,17 +74,12 @@ const GameListApi = () => {
       ) : (
         <div>
           <input type="text" value={search || ""} onChange={searchBar} />
-          {search
-            ? findGame.map((games) => (
-                <div key={games.id}>
-                  <Game games={games} />
-                </div>
-              ))
-            : games.map((games) => (
-                <div key={games.id}>
-                  <Game games={games} />
-                </div>
-              ))}
+
+          {games.map((games) => (
+            <div key={games.id}>
+              <Game games={games} />
+            </div>
+          ))}
         </div>
       )}
     </>
