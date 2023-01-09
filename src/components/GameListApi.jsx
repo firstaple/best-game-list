@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Game from "./Game";
+import styles from "./Game.module.css";
 
 const GameListApi = () => {
   const key = "bd1a96395fad40d3a2337b3ff3c01116";
@@ -75,11 +76,13 @@ const GameListApi = () => {
         <div>
           <input type="text" value={search || ""} onChange={searchBar} />
 
-          {games.map((games) => (
-            <div key={games.id}>
-              <Game games={games} />
-            </div>
-          ))}
+          <div className={styles.game}>
+            {games.map((games) => (
+              <div key={games.id}>
+                <Game games={games} />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>
