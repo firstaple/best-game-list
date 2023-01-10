@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./Game.module.css";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -8,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const Game = ({ games }) => {
-  const key = "bd1a96395fad40d3a2337b3ff3c01116";
+  const key = "2c0c9f06996a4376b75df0eaae860863";
 
   const [details, setDetails] = useState();
 
@@ -24,11 +23,11 @@ const Game = ({ games }) => {
   }, []);
 
   return (
-    <Card sx={{ width: 550 }}>
+    <Card>
       {games.background_image ? (
         <CardMedia sx={{ height: 250 }} image={games.background_image} />
       ) : (
-        <div>loding</div>
+        ""
       )}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

@@ -3,13 +3,10 @@ import Game from "./Game";
 import styles from "./Game.module.css";
 
 const GameListApi = () => {
-  const key = "bd1a96395fad40d3a2337b3ff3c01116";
+  const key = "2c0c9f06996a4376b75df0eaae860863";
 
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
-  const [api, setApi] = useState(
-    `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&page_size=39&key=${key}`
-  );
   const [nextApi, setNextApi] = useState();
   const [search, setSearch] = useState();
   const [nextGame, setNextGame] = useState([]);
@@ -19,7 +16,7 @@ const GameListApi = () => {
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight) {
-      getNextGame(nextApi);
+      getNextGame();
     }
   };
 
@@ -28,22 +25,27 @@ const GameListApi = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, [handleScroll]);
 
-  const getGame = async (api) => {
-    const json = await (await fetch(api)).json();
+  const getGame = async () => {
+    const json = await (
+      await fetch(
+        `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&page_size=9&key=${key}`
+      )
+    ).json();
     setNextApi(json.next);
     setGames(json.results);
     setLoading(false);
   };
 
   useEffect(() => {
-    getGame(api);
+    getGame();
   }, []);
 
-  const getNextGame = async (nextApi) => {
-    const json = await (await fetch(nextApi)).json();
-    setNextGame(json.results.concat(nextGame));
+  const getNextGame = async () => {
+    const json = await (await fetch(`${nextApi}`)).json();
+    setNextApi(json.next);
+    setNextGame(nextGame.concat(json.results));
     setLoading(false);
   };
 
@@ -61,14 +63,10 @@ const GameListApi = () => {
     findGame();
   };
 
-  console.log(nextGame);
-
   return (
     <>
       {loading ? (
-        <div>
-          <span>Loading...</span>
-        </div>
+        <span className={styles.loading}>Loading...</span>
       ) : (
         <div>
           <input
@@ -77,7 +75,6 @@ const GameListApi = () => {
             value={search || ""}
             onChange={searchBar}
           />
-
           <div className={styles.game}>
             {games.map((games) => (
               <div key={games.id}>
@@ -87,18 +84,16 @@ const GameListApi = () => {
           </div>
         </div>
       )}
-      {loading ? (
-        <div>
-          <span>Loading...</span>
-        </div>
-      ) : (
-        <div>
-          {nextGame.map((games) => {
+      {nextGame ? (
+        <div className={styles.game}>
+          {nextGame.map((games) => (
             <div key={games.id}>
               <Game games={games} />
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
+      ) : (
+        ""
       )}
     </>
   );
