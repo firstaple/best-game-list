@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/best-game-list/static/css/main.178e7481.css",
+    "main.js": "/best-game-list/static/js/main.9c3e8965.js",
+    "static/js/787.8f309634.chunk.js": "/best-game-list/static/js/787.8f309634.chunk.js",
+    "index.html": "/best-game-list/index.html",
+    "main.178e7481.css.map": "/best-game-list/static/css/main.178e7481.css.map",
+    "main.9c3e8965.js.map": "/best-game-list/static/js/main.9c3e8965.js.map",
+    "787.8f309634.chunk.js.map": "/best-game-list/static/js/787.8f309634.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.178e7481.css",
+    "static/js/main.9c3e8965.js"
+  ]
+}
