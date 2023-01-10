@@ -7,38 +7,44 @@ const GameListApi = () => {
 
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
-  const [api] = useState(
-    `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&key=${key}`
+  const [api, setApi] = useState(
+    `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&page_size=39&key=${key}`
   );
   const [nextApi, setNextApi] = useState();
-  const [preApi, setPreApi] = useState();
   const [search, setSearch] = useState();
+  const [nextGame, setNextGame] = useState([]);
+
+  const handleScroll = () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      getNextGame(nextApi);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const getGame = async (api) => {
-    const json = await (
-      await fetch(`
-      ${api}
-      `)
-    ).json();
+    const json = await (await fetch(api)).json();
     setNextApi(json.next);
-    setPreApi(json.previous);
     setGames(json.results);
     setLoading(false);
   };
 
   useEffect(() => {
     getGame(api);
-    // getDetails();
   }, []);
 
-  const previous = () => {
-    setLoading(true);
-    getGame(preApi);
-  };
-
-  const next = () => {
-    setLoading(true);
-    getGame(nextApi);
+  const getNextGame = async (nextApi) => {
+    const json = await (await fetch(nextApi)).json();
+    setNextGame(json.results.concat(nextGame));
+    setLoading(false);
   };
 
   const searchBar = (e) => {
@@ -55,26 +61,22 @@ const GameListApi = () => {
     findGame();
   };
 
+  console.log(nextGame);
+
   return (
     <>
-      {nextApi === null ? (
-        <button onClick={previous}>previous</button>
-      ) : preApi === null ? (
-        <button onClick={next}>next</button>
-      ) : (
-        <div>
-          <button onClick={previous}>previous</button>
-          <button onClick={next}>next</button>
-        </div>
-      )}
-
       {loading ? (
         <div>
           <span>Loading...</span>
         </div>
       ) : (
         <div>
-          <input type="text" value={search || ""} onChange={searchBar} />
+          <input
+            className={styles.searchBar}
+            type="text"
+            value={search || ""}
+            onChange={searchBar}
+          />
 
           <div className={styles.game}>
             {games.map((games) => (
@@ -83,6 +85,19 @@ const GameListApi = () => {
               </div>
             ))}
           </div>
+        </div>
+      )}
+      {loading ? (
+        <div>
+          <span>Loading...</span>
+        </div>
+      ) : (
+        <div>
+          {nextGame.map((games) => {
+            <div key={games.id}>
+              <Game games={games} />
+            </div>;
+          })}
         </div>
       )}
     </>
