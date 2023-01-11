@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import styles from "./Game.module.css";
+import { Link } from "react-router-dom";
 
 const Game = ({ games }) => {
   const key = "2c0c9f06996a4376b75df0eaae860863";
@@ -25,7 +26,15 @@ const Game = ({ games }) => {
   return (
     <Card sx={{ width: 550 }}>
       {games.background_image ? (
-        <CardMedia sx={{ height: 250 }} image={games.background_image} />
+        <Link
+          to="/details"
+          state={{
+            details: details,
+            games: games,
+          }}
+        >
+          <CardMedia sx={{ height: 250 }} image={games.background_image} />
+        </Link>
       ) : (
         ""
       )}
