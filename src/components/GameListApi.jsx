@@ -12,9 +12,10 @@ const GameListApi = () => {
   const [nextGame, setNextGame] = useState([]);
 
   const handleScroll = () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
+    const doc = document.documentElement;
+    const scrollHeight = doc.scrollHeight;
+    const scrollTop = doc.scrollTop;
+    const clientHeight = doc.clientHeight;
     if (scrollTop + clientHeight >= scrollHeight) {
       getNextGame();
     }
@@ -30,7 +31,7 @@ const GameListApi = () => {
   const getGame = async () => {
     const json = await (
       await fetch(
-        `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&page_size=9&key=${key}`
+        `https://api.rawg.io/api/games?metacritic=80,100&platdorms=4&page_size=9&key=${key}`
       )
     ).json();
     setNextApi(json.next);

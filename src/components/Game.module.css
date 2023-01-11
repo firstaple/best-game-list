@@ -22,9 +22,7 @@
 }
 
 .game div div {
-  margin-bottom: 5px;
-  background-color: rgba(0, 0, 0, 0.01);
-  width: 550px;
+  margin-bottom: 10px;
 }
 
 .loading {
@@ -36,8 +34,21 @@
   font-weight: 300;
 }
 
+.game_title {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 768px) {
+  .game {
+    padding: 0 10px;
+  }
+
   .game div div {
-    width: 360px;
+    width: auto;
+  }
+
+  .game_title {
+    display: block;
   }
 }
