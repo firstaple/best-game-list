@@ -39,9 +39,13 @@
   justify-content: space-between;
 }
 
+.game_title span {
+  height: fit-content;
+}
+
 @media screen and (max-width: 768px) {
   .game {
-    padding: 0 10px;
+    padding: 0 13px;
   }
 
   .game div div {
@@ -50,5 +54,9 @@
 
   .game_title {
     display: block;
+  }
+
+  .searchBar {
+    width: 250px;
   }
 }
