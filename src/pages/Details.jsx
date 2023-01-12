@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styles from "./Details.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,10 +9,7 @@ const Details = () => {
   const games = location.state.games;
   const details = location.state.details;
 
-  const navigate = useNavigate();
-
-  navigate("/");
-  navigate("/", { replace: true });
+  console.log(games);
 
   const settings = {
     dots: false,
@@ -27,33 +24,26 @@ const Details = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.layout}>
-        <div className={styles.title_area}>
-          <h1 className={styles.title}>{games.name}</h1>
+      <h2 className={styles.title}>{games.name}</h2>
+      <div className={styles.body}>
+        <div className={styles.screenshots}>
+          <Slider {...settings}>
+            {games.short_screenshots.map((screenshots) => (
+              <img src={screenshots.image} alt="" />
+            ))}
+          </Slider>
         </div>
-        <div className={styles.body_area}>
-          <div className={styles.slide_area}>
-            <Slider {...settings}>
-              {games.short_screenshots.map((screenshots) => (
-                <div key={screenshots.id} className={styles.slide}>
-                  <img src={screenshots.image} />
-                </div>
-              ))}
-            </Slider>
-          </div>
-          <div className={styles.games_data}>
-            <div className={styles.games_details}>&nbsp;{details}</div>
-            <div className={styles.games_rating}>Rating : {games.rating}</div>
-            <div className={styles.games_metactiric}>
-              Metacritic : {games.metacritic}
-            </div>
-            <div className={styles.games_genres}>
-              Genres : {games.genres.map((genres) => genres.name)}
-            </div>
-          </div>
+        <div className={styles.details}>
+          <span>{details}</span>
+          <p />
+          <span>rating : {games.rating}</span>
+          <br />
+          <span>metacritic : {games.metacritic}</span>
+          <br />
+          <span>genres : {games.genres.map((genres) => genres.name)}</span>
         </div>
-        <div className={styles.review_area}></div>
       </div>
+      <div className={styles.review}></div>
     </div>
   );
 };
