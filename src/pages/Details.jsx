@@ -9,8 +9,6 @@ const Details = () => {
   const games = location.state.games;
   const details = location.state.details;
 
-  console.log(games);
-
   const settings = {
     dots: false,
     infinite: true,
@@ -29,7 +27,7 @@ const Details = () => {
         <div className={styles.screenshots}>
           <Slider {...settings}>
             {games.short_screenshots.map((screenshots) => (
-              <img src={screenshots.image} alt="" />
+              <img key={screenshots.id} src={screenshots.image} alt="" />
             ))}
           </Slider>
         </div>
