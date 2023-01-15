@@ -50,8 +50,8 @@ const GameListApi = () => {
     setLoading(false);
   };
 
-  const searchBar = (e) => {
-    setSearch(e.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
     const findGame = async () => {
       const json = await (
         await fetch(
@@ -64,18 +64,24 @@ const GameListApi = () => {
     findGame();
   };
 
+  const searchBar = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <>
       {loading ? (
         <span className={styles.loading}>Loading...</span>
       ) : (
         <div>
-          <input
-            className={styles.searchBar}
-            type="text"
-            value={search || ""}
-            onChange={searchBar}
-          />
+          <form onSubmit={onSubmit}>
+            <input
+              className={styles.searchBar}
+              type="text"
+              value={search || ""}
+              onChange={searchBar}
+            />
+          </form>
           <div className={styles.game}>
             {games.map((games) => (
               <div key={games.id}>
@@ -85,7 +91,7 @@ const GameListApi = () => {
           </div>
         </div>
       )}
-      {nextGame ? (
+      {nextGame && !search ? (
         <div className={styles.game}>
           {nextGame.map((games) => (
             <div key={games.id}>

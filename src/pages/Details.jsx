@@ -6,54 +6,61 @@ import Slider from "react-slick";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { useState } from "react";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 const Details = () => {
-  const location = useLocation();
-  const games = location.state.games;
-  const details = location.state.details;
-
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
   // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
-    apiKey: "AIzaSyCZoBoCfqS-i7nzXpAWZB1weQVTlmXgzk0",
-    authDomain: "best-game-list.firebaseapp.com",
-    projectId: "best-game-list",
-    storageBucket: "best-game-list.appspot.com",
-    messagingSenderId: "978905779954",
-    appId: "1:978905779954:web:8451142a2fb600c98d0a6b",
-    measurementId: "G-M1KL12KX1B",
-    // The value of `databaseURL` depends on the location of the database
-    databaseURL: "https://best-game-list-default-rtdb.firebaseio.com",
+    apiKey: "AIzaSyAk4QCMG3Ai_Y2mL6y8cSaSv3e6K3XBnP4",
+    authDomain: "best-game-list-193cd.firebaseapp.com",
+    projectId: "best-game-list-193cd",
+    storageBucket: "best-game-list-193cd.appspot.com",
+    messagingSenderId: "745702572321",
+    appId: "1:745702572321:web:9310249593f392c114be60",
   };
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
 
-  // Initialize Realtime Database and get a reference to the service
-  const database = getDatabase(app);
+  const dataWrite = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Alan",
+        middle: "Mathison",
+        last: "Turing",
+        born: 1912,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
-  // firebase real time database write
-  function writeGameData() {
-    const db = getDatabase();
-    set(ref(db, "game/" + games.id), {
-      games: games.name,
-      details: details,
+  const dataReading = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
     });
-  }
+  };
 
-  // firebase real time database read(value)
-  const db = getDatabase();
-  const id = ref(db, "game/" + games.id);
-  onValue(id, (snapshot) => {
-    const data = snapshot.val();
-    console.log(data);
-  });
+  console.log(dataReading());
+
+  const location = useLocation();
+  const games = location.state.games;
+  const details = location.state.details;
+
+  const [review, setReview] = useState();
+  const [readingReview, setReadReview] = useState([]);
+
+  const toDoList = [...readingReview];
+
+  console.log(toDoList);
 
   const settings = {
     dots: false,
@@ -66,9 +73,18 @@ const Details = () => {
     autoplay: true,
   };
 
+  const addReview = (e) => {
+    setReview(e.target.value);
+  };
+
+  const reviewArea = (e) => {
+    e.preventDefault();
+    setReadReview(review);
+  };
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{games.name}</h2>
+      {/* <h2 className={styles.title}>{games.name}</h2>
       <div className={styles.body}>
         <div className={styles.screenshots}>
           <Slider {...settings}>
@@ -86,8 +102,15 @@ const Details = () => {
           <br />
           <span>genres : {games.genres.map((genres) => genres.name)}</span>
         </div>
+      </div> */}
+      <div className={styles.review}>
+        <form action="" onSubmit={reviewArea}>
+          <input type="text" onChange={addReview} value={review} />
+        </form>
+        {toDoList.map((add) => (
+          <div>{add.readingReview}</div>
+        ))}
       </div>
-      <div className={styles.review}></div>
     </div>
   );
 };
