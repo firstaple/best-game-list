@@ -28,39 +28,36 @@ const Details = () => {
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  const dataWrite = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Alan",
-        middle: "Mathison",
-        last: "Turing",
-        born: 1912,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
+  // const dataWrite = async () => {
+  //   try {
+  //     const docRef = await addDoc(collection(db, "users"), {
+  //       first: "Alan",
+  //       middle: "Mathison",
+  //       last: "Turing",
+  //       born: 1912,
+  //     });
+  //     console.log("Document written with ID: ", docRef.id);
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
+  // };
 
-  const dataReading = async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
-  };
+  // const dataReading = async () => {
+  //   const querySnapshot = await getDocs(collection(db, "users"));
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(`${doc.id} => ${doc.data()}`);
+  //   });
+  // };
 
-  console.log(dataReading());
+  // console.log(dataReading());
 
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
 
   const [review, setReview] = useState();
-  const [readingReview, setReadReview] = useState([]);
-
-  const toDoList = [...readingReview];
-
-  console.log(toDoList);
+  const [reviewId, setReviewId] = useState(1);
+  const [submitReview, setSubmitReview] = useState([]);
 
   const settings = {
     dots: false,
@@ -77,10 +74,17 @@ const Details = () => {
     setReview(e.target.value);
   };
 
-  const reviewArea = (e) => {
+  const reviewSubmit = (e) => {
     e.preventDefault();
-    setReadReview(review);
+    setReviewId(Math.random());
+    const reviewObject = {
+      ID: reviewId,
+      review: review,
+    };
+    setSubmitReview(submitReview.concat(reviewObject));
+    setReview("");
   };
+  console.log(submitReview);
 
   return (
     <div className={styles.container}>
@@ -104,11 +108,13 @@ const Details = () => {
         </div>
       </div> */}
       <div className={styles.review}>
-        <form action="" onSubmit={reviewArea}>
-          <input type="text" onChange={addReview} value={review} />
+        <form action="" onSubmit={reviewSubmit}>
+          <input type="text" onChange={addReview} value={review || ""} />
         </form>
-        {toDoList.map((add) => (
-          <div>{add.readingReview}</div>
+        {submitReview.map((review) => (
+          <div key={review.id} style={{ display: "flex" }}>
+            {review.review}
+          </div>
         ))}
       </div>
     </div>
