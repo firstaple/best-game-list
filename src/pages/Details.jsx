@@ -6,15 +6,8 @@ import Slider from "react-slick";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteField,
-} from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -69,13 +62,13 @@ const Details = () => {
   const app = initializeApp(firebaseConfig);
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
-  // const gameReview = doc(db, "users");
+
+  const newReviewId = doc(collection(db));
 
   const dataWrite = async () => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
+      const docRef = await addDoc(collection(db, "ID"), {
         review: review,
-        rating: games.rating,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -84,19 +77,17 @@ const Details = () => {
   };
 
   const dataReading = async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const querySnapshot = await getDocs(collection(db, "ID"));
     querySnapshot.forEach((doc) => {
       console.log(`${doc.id} => ${doc.data()}`);
     });
   };
 
-  console.log(dataReading());
+  const dataDelete = async () => {
+    await deleteDoc(doc(db, "ID", "Document ID"));
+  };
 
-  // const dataDelete = async () => {
-  //   await updateDoc(gameReview, {
-  //     review: deleteField(),
-  //   });
-  // };
+  console.log(dataDelete());
 
   return (
     <div className={styles.container}>
