@@ -7,7 +7,14 @@ import Slider from "react-slick";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteField,
+} from "firebase/firestore";
 import { useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,40 +30,11 @@ const Details = () => {
     appId: "1:745702572321:web:9310249593f392c114be60",
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-
-  // const dataWrite = async () => {
-  //   try {
-  //     const docRef = await addDoc(collection(db, "users"), {
-  //       first: "Alan",
-  //       middle: "Mathison",
-  //       last: "Turing",
-  //       born: 1912,
-  //     });
-  //     console.log("Document written with ID: ", docRef.id);
-  //   } catch (e) {
-  //     console.error("Error adding document: ", e);
-  //   }
-  // };
-
-  // const dataReading = async () => {
-  //   const querySnapshot = await getDocs(collection(db, "users"));
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(`${doc.id} => ${doc.data()}`);
-  //   });
-  // };
-
-  // console.log(dataReading());
-
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
 
   const [review, setReview] = useState();
-  const [reviewId, setReviewId] = useState(1);
   const [submitReview, setSubmitReview] = useState([]);
 
   const settings = {
@@ -76,15 +54,49 @@ const Details = () => {
 
   const reviewSubmit = (e) => {
     e.preventDefault();
-    setReviewId(Math.random());
-    const reviewObject = {
-      ID: reviewId,
-      review: review,
-    };
-    setSubmitReview(submitReview.concat(reviewObject));
+    setSubmitReview(submitReview.concat(review));
+    dataWrite();
     setReview("");
   };
-  console.log(submitReview);
+
+  const deleteBtn = (index) => {
+    setSubmitReview((curToDos) =>
+      curToDos.filter((_, curIndex) => curIndex !== index)
+    );
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
+  // const gameReview = doc(db, "users");
+
+  const dataWrite = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        review: review,
+        rating: games.rating,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const dataReading = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+    });
+  };
+
+  console.log(dataReading());
+
+  // const dataDelete = async () => {
+  //   await updateDoc(gameReview, {
+  //     review: deleteField(),
+  //   });
+  // };
 
   return (
     <div className={styles.container}>
@@ -111,10 +123,17 @@ const Details = () => {
         <form action="" onSubmit={reviewSubmit}>
           <input type="text" onChange={addReview} value={review || ""} />
         </form>
-        {submitReview.map((review) => (
-          <div key={review.id} style={{ display: "flex" }}>
-            {review.review}
-          </div>
+        {submitReview.map((review, index) => (
+          <li key={index}>
+            {review}
+            <button
+              onClick={() => {
+                deleteBtn(index);
+              }}
+            >
+              delete
+            </button>
+          </li>
         ))}
       </div>
     </div>
