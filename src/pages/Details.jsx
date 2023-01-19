@@ -29,6 +29,7 @@ const Details = () => {
 
   const [review, setReview] = useState();
   const [submitReview, setSubmitReview] = useState([]);
+  const [dbReview, setDbReview] = useState();
 
   const settings = {
     dots: false,
@@ -63,8 +64,6 @@ const Details = () => {
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
 
-  const newReviewId = doc(collection(db));
-
   const dataWrite = async () => {
     try {
       const docRef = await addDoc(collection(db, "ID"), {
@@ -79,12 +78,13 @@ const Details = () => {
   const dataReading = async () => {
     const querySnapshot = await getDocs(collection(db, "ID"));
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
+      setDbReview(doc.id);
+      console.log(doc.id);
     });
   };
 
   const dataDelete = async () => {
-    await deleteDoc(doc(db, "ID", "Document ID"));
+    await deleteDoc(doc(db, "ID", dbReview));
   };
 
   console.log(dataDelete());
