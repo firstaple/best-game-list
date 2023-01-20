@@ -33,12 +33,14 @@
 }
 
 .review {
+  border: 1px solid black;
   height: 50%;
 }
 
 @media screen and (max-width: 1600px) {
   .body {
-    display: block;
+    flex-direction: column;
+    height: fit-content;
   }
   .screenshots {
     width: 100%;

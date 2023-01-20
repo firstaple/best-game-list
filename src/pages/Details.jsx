@@ -6,7 +6,7 @@ import Slider from "react-slick";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { deleteDoc, getFirestore, query, where } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,7 +28,6 @@ const Details = () => {
   const details = location.state.details;
 
   const [review, setReview] = useState();
-  const [submitReview, setSubmitReview] = useState([]);
   const [dbReview, setDbReview] = useState([]);
 
   const settings = {
@@ -48,7 +47,6 @@ const Details = () => {
 
   const reviewSubmit = (e) => {
     e.preventDefault();
-    setSubmitReview(submitReview.concat(review));
     dataWrite();
     setReview("");
     dataReading();
@@ -62,6 +60,8 @@ const Details = () => {
   const dataWrite = async () => {
     try {
       const docRef = await addDoc(collection(db, "ID"), {
+        games: games,
+        details: details,
         review: review,
       });
       console.log("Document written with ID: ", docRef.id);
@@ -74,7 +74,7 @@ const Details = () => {
     const querySnapshot = await getDocs(collection(db, "ID"));
     let array = [];
     querySnapshot.forEach((doc) => {
-      array.push(doc.id);
+      array.push(doc);
     });
     setDbReview(array);
   };
@@ -94,7 +94,7 @@ const Details = () => {
 
   return (
     <div className={styles.container}>
-      {/* <h2 className={styles.title}>{games.name}</h2>
+      <h2 className={styles.title}>{games.name}</h2>
       <div className={styles.body}>
         <div className={styles.screenshots}>
           <Slider {...settings}>
@@ -112,17 +112,17 @@ const Details = () => {
           <br />
           <span>genres : {games.genres.map((genres) => genres.name)}</span>
         </div>
-      </div> */}
+      </div>
       <div className={styles.review}>
         <form action="" onSubmit={reviewSubmit}>
           <input type="text" onChange={addReview} value={review || ""} />
         </form>
         {dbReview.map((reivew, index) => (
           <div key={index}>
-            {reivew}
+            {reivew.data().review}
             <button
               onClick={() => {
-                onClick(reivew);
+                onClick(reivew.id);
               }}
             >
               delete
