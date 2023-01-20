@@ -6,9 +6,9 @@ import Slider from "react-slick";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { deleteDoc, getFirestore } from "firebase/firestore";
+import { deleteDoc, getFirestore, query, where } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,7 +29,7 @@ const Details = () => {
 
   const [review, setReview] = useState();
   const [submitReview, setSubmitReview] = useState([]);
-  const [dbReview, setDbReview] = useState();
+  const [dbReview, setDbReview] = useState([]);
 
   const settings = {
     dots: false,
@@ -51,12 +51,7 @@ const Details = () => {
     setSubmitReview(submitReview.concat(review));
     dataWrite();
     setReview("");
-  };
-
-  const deleteBtn = (index) => {
-    setSubmitReview((curToDos) =>
-      curToDos.filter((_, curIndex) => curIndex !== index)
-    );
+    dataReading();
   };
 
   // Initialize Firebase
@@ -77,17 +72,25 @@ const Details = () => {
 
   const dataReading = async () => {
     const querySnapshot = await getDocs(collection(db, "ID"));
+    let array = [];
     querySnapshot.forEach((doc) => {
-      setDbReview(doc.id);
-      console.log(doc.id);
+      array.push(doc.id);
     });
+    setDbReview(array);
   };
 
-  const dataDelete = async () => {
-    await deleteDoc(doc(db, "ID", dbReview));
+  useEffect(() => {
+    dataReading();
+  }, []);
+
+  const dataDelete = async (reivew) => {
+    await deleteDoc(doc(db, "ID", reivew));
   };
 
-  console.log(dataDelete());
+  const onClick = (reivew) => {
+    dataDelete(reivew);
+    dataReading();
+  };
 
   return (
     <div className={styles.container}>
@@ -114,17 +117,17 @@ const Details = () => {
         <form action="" onSubmit={reviewSubmit}>
           <input type="text" onChange={addReview} value={review || ""} />
         </form>
-        {submitReview.map((review, index) => (
-          <li key={index}>
-            {review}
+        {dbReview.map((reivew, index) => (
+          <div key={index}>
+            {reivew}
             <button
               onClick={() => {
-                deleteBtn(index);
+                onClick(reivew);
               }}
             >
               delete
             </button>
-          </li>
+          </div>
         ))}
       </div>
     </div>
