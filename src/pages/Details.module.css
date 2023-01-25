@@ -5,18 +5,25 @@
   margin-top: 20px;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 45%;
+  height: fit-content;
+  align-items: center;
+}
+
 .title {
+  align-self: flex-start;
+  position: relative;
+  left: 25%;
   margin: 0;
   height: 5%;
 }
 
-.body {
-  display: flex;
-  height: 45%;
-}
-
 .screenshots {
   width: 50%;
+  height: 432px;
 }
 
 .screenshots div {
@@ -33,6 +40,7 @@
 }
 
 .review {
+  width: 50%;
   border: 1px solid black;
   height: 50%;
 }

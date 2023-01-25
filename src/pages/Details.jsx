@@ -60,9 +60,9 @@ const Details = () => {
   const dataWrite = async () => {
     try {
       const docRef = await addDoc(collection(db, "ID"), {
+        review: review,
         games: games,
         details: details,
-        review: review,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -94,8 +94,8 @@ const Details = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{games.name}</h2>
       <div className={styles.body}>
+        <h2 className={styles.title}>{games.name}</h2>
         <div className={styles.screenshots}>
           <Slider {...settings}>
             {games.short_screenshots.map((screenshots) => (
@@ -112,23 +112,23 @@ const Details = () => {
           <br />
           <span>genres : {games.genres.map((genres) => genres.name)}</span>
         </div>
-      </div>
-      <div className={styles.review}>
-        <form action="" onSubmit={reviewSubmit}>
-          <input type="text" onChange={addReview} value={review || ""} />
-        </form>
-        {dbReview.map((reivew, index) => (
-          <div key={index}>
-            {reivew.data().review}
-            <button
-              onClick={() => {
-                onClick(reivew.id);
-              }}
-            >
-              delete
-            </button>
-          </div>
-        ))}
+        <div className={styles.review}>
+          {dbReview.map((reivew, index) => (
+            <div key={index}>
+              {reivew.data().review}
+              <button
+                onClick={() => {
+                  onClick(reivew.id);
+                }}
+              >
+                delete
+              </button>
+            </div>
+          ))}
+          <form action="" onSubmit={reviewSubmit}>
+            <input type="text" onChange={addReview} value={review || ""} />
+          </form>
+        </div>
       </div>
     </div>
   );
