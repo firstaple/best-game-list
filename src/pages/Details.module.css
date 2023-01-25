@@ -40,9 +40,14 @@
 }
 
 .review {
+  color: orange;
   width: 50%;
-  border: 1px solid black;
   height: 50%;
+}
+
+.review_box {
+  position: absolute;
+  bottom: 0;
 }
 
 @media screen and (max-width: 1600px) {

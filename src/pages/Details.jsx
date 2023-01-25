@@ -125,8 +125,9 @@ const Details = () => {
               </button>
             </div>
           ))}
-          <form action="" onSubmit={reviewSubmit}>
+          <form className={styles.review_box} action="" onSubmit={reviewSubmit}>
             <input type="text" onChange={addReview} value={review || ""} />
+            <button>write</button>
           </form>
         </div>
       </div>
