@@ -61,8 +61,7 @@ const Details = () => {
     try {
       const docRef = await addDoc(collection(db, "ID"), {
         review: review,
-        games: games,
-        details: details,
+        games: games.id,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -104,7 +103,14 @@ const Details = () => {
           </Slider>
         </div>
         <div className={styles.details}>
-          <span>{details}</span>
+          <span>
+            {details && details.length > 800
+              ? `${details.slice(0, 800)}`
+              : details}
+          </span>
+          <button style={{ border: "none", backgroundColor: "inherit" }}>
+            ...더보기
+          </button>
           <p />
           <span>rating : {games.rating}</span>
           <br />
@@ -113,21 +119,33 @@ const Details = () => {
           <span>genres : {games.genres.map((genres) => genres.name)}</span>
         </div>
         <div className={styles.review}>
-          {dbReview.map((reivew, index) => (
+          <h5 className={styles.review_title}>Review</h5>
+          {dbReview.map((review, index) => (
             <div key={index}>
-              {reivew.data().review}
-              <button
-                onClick={() => {
-                  onClick(reivew.id);
-                }}
-              >
-                delete
-              </button>
+              {review.data().games === games.id ? (
+                <div>
+                  {review.data().review}
+                  <button
+                    className={styles.review_delete_btn}
+                    onClick={() => {
+                      onClick(review.id);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           ))}
           <form className={styles.review_box} action="" onSubmit={reviewSubmit}>
-            <input type="text" onChange={addReview} value={review || ""} />
-            <button>write</button>
+            <input
+              type="text"
+              placeholder="Enter..."
+              onChange={addReview}
+              value={review || ""}
+            />
           </form>
         </div>
       </div>

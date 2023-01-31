@@ -45,21 +45,22 @@
   height: 50%;
 }
 
+.review_title {
+  width: fit-content;
+  margin: 0 0 10px 0;
+}
+
+.review button {
+  border: none;
+  background-color: inherit;
+}
+
+.review_delete_btn {
+  color: red;
+}
+
 .review_box {
   position: absolute;
   bottom: 0;
-}
-
-@media screen and (max-width: 1600px) {
-  .body {
-    flex-direction: column;
-    height: fit-content;
-  }
-  .screenshots {
-    width: 100%;
-  }
-  .details {
-    width: 100%;
-    padding: 10px 0;
-  }
+  margin-bottom: 10px;
 }
