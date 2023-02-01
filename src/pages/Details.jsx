@@ -6,7 +6,14 @@ import Slider from "react-slick";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { deleteDoc, getFirestore } from "firebase/firestore";
+import {
+  deleteDoc,
+  getFirestore,
+  limit,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -62,6 +69,7 @@ const Details = () => {
       const docRef = await addDoc(collection(db, "ID"), {
         review: review,
         games: games.id,
+        timeStamp: serverTimestamp(),
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -70,7 +78,8 @@ const Details = () => {
   };
 
   const dataReading = async () => {
-    const querySnapshot = await getDocs(collection(db, "ID"));
+    const filedReading = query(collection(db, "ID"), orderBy("timeStamp"));
+    const querySnapshot = await getDocs(filedReading);
     let array = [];
     querySnapshot.forEach((doc) => {
       array.push(doc);
