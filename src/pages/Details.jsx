@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import PasswordModal from "../components/PasswordModal";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,8 +35,22 @@ const Details = () => {
   const games = location.state.games;
   const details = location.state.details;
 
+  const ITEMS_PER_PAGE = 800;
+
   const [review, setReview] = useState();
   const [dbReview, setDbReview] = useState([]);
+  const [detailShow, setDetailShow] = useState(ITEMS_PER_PAGE);
+  const [data] = useState(details);
+  const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(!open);
+  };
 
   const settings = {
     dots: false,
@@ -54,9 +69,7 @@ const Details = () => {
 
   const reviewSubmit = (e) => {
     e.preventDefault();
-    dataWrite();
-    setReview("");
-    dataReading();
+    handleOpen();
   };
 
   // Initialize Firebase
@@ -69,6 +82,7 @@ const Details = () => {
       const docRef = await addDoc(collection(db, "ID"), {
         review: review,
         games: games.id,
+        password: password,
         timeStamp: serverTimestamp(),
       });
       console.log("Document written with ID: ", docRef.id);
@@ -78,7 +92,11 @@ const Details = () => {
   };
 
   const dataReading = async () => {
-    const filedReading = query(collection(db, "ID"), orderBy("timeStamp"));
+    const filedReading = query(
+      collection(db, "ID"),
+      orderBy("timeStamp"),
+      limit(4)
+    );
     const querySnapshot = await getDocs(filedReading);
     let array = [];
     querySnapshot.forEach((doc) => {
@@ -100,8 +118,31 @@ const Details = () => {
     dataReading();
   };
 
+  const handleLoadMore = () => {
+    setDetailShow((prevCount) => prevCount + ITEMS_PER_PAGE);
+  };
+
+  const handleLoadClose = () => {
+    setDetailShow((prevCount) => prevCount - ITEMS_PER_PAGE);
+  };
+
+  const addPassword = (newPassword) => {
+    setPassword(newPassword);
+  };
+
+  console.log(password);
+  console.log(open);
+
   return (
     <div className={styles.container}>
+      <PasswordModal
+        addPassword={addPassword}
+        open={open}
+        handleClose={handleClose}
+        dataWrite={dataWrite}
+        setReview={setReview}
+        dataReading={dataReading}
+      />
       <div className={styles.body}>
         <h2 className={styles.title}>{games.name}</h2>
         <div className={styles.screenshots}>
@@ -112,14 +153,23 @@ const Details = () => {
           </Slider>
         </div>
         <div className={styles.details}>
-          <span>
-            {details && details.length > 800
-              ? `${details.slice(0, 800)}`
-              : details}
-          </span>
-          <button style={{ border: "none", backgroundColor: "inherit" }}>
-            ...더보기
-          </button>
+          <span> &nbsp;{details.slice(0, detailShow)}</span>
+          {detailShow < data.length && (
+            <button
+              onClick={handleLoadMore}
+              style={{ border: "none", backgroundColor: "inherit" }}
+            >
+              ...더보기
+            </button>
+          )}
+          {detailShow > ITEMS_PER_PAGE && (
+            <button
+              onClick={handleLoadClose}
+              style={{ border: "none", backgroundColor: "inherit" }}
+            >
+              ...접기
+            </button>
+          )}
           <p />
           <span>rating : {games.rating}</span>
           <br />
