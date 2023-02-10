@@ -3,6 +3,9 @@ import styles from "./Details.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -16,7 +19,6 @@ import {
 } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import PasswordModal from "../components/PasswordModal";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,6 +33,18 @@ const Details = () => {
     appId: "1:745702572321:web:9310249593f392c114be60",
   };
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
@@ -43,13 +57,23 @@ const Details = () => {
   const [data] = useState(details);
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(!open);
+    setOpen(false);
+  };
+
+  const confirmHandleOpen = () => {
+    setConfirmOpen(true);
+  };
+
+  const confirmHandleClose = () => {
+    setConfirmOpen(false);
   };
 
   const settings = {
@@ -70,6 +94,17 @@ const Details = () => {
   const reviewSubmit = (e) => {
     e.preventDefault();
     handleOpen();
+  };
+
+  const addPassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const passPassword = () => {
+    handleClose();
+    dataWrite();
+    setReview("");
+    dataReading();
   };
 
   // Initialize Firebase
@@ -126,23 +161,51 @@ const Details = () => {
     setDetailShow((prevCount) => prevCount - ITEMS_PER_PAGE);
   };
 
-  const addPassword = (newPassword) => {
-    setPassword(newPassword);
+  const confirm = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
-  console.log(password);
-  console.log(open);
+  const confirmPassPassword = () => {
+    confirmHandleClose();
+    dataReading();
+  };
 
   return (
     <div className={styles.container}>
-      <PasswordModal
-        addPassword={addPassword}
+      <Modal
         open={open}
-        handleClose={handleClose}
-        dataWrite={dataWrite}
-        setReview={setReview}
-        dataReading={dataReading}
-      />
+        onClose={handleClose}
+        aria-lbelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            후기 삭제시 사용할 비밀번호를 입력해주세요
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <form onSubmit={passPassword}>
+              <input type="password" onChange={addPassword} />
+            </form>
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={confirmOpen}
+        onClose={confirmHandleClose}
+        aria-lbelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            비밀번호를 확인해주세요
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <form onSubmit={confirmPassPassword}>
+              <input type="password" onChange={confirm} />
+            </form>
+          </Typography>
+        </Box>
+      </Modal>
       <div className={styles.body}>
         <h2 className={styles.title}>{games.name}</h2>
         <div className={styles.screenshots}>
@@ -187,7 +250,12 @@ const Details = () => {
                   <button
                     className={styles.review_delete_btn}
                     onClick={() => {
-                      onClick(review.id);
+                      confirmHandleOpen();
+                      console.log(review.data().password);
+                      console.log(confirmPassword);
+                      if (review.data().password === confirmPassword) {
+                        onClick(review.id);
+                      }
                     }}
                   >
                     X
