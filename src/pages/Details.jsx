@@ -19,6 +19,7 @@ import {
 } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import Review from "../components/Review";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -48,17 +49,16 @@ const Details = () => {
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
+  const detailsCheck = details || [];
 
   const ITEMS_PER_PAGE = 800;
 
   const [review, setReview] = useState();
   const [dbReview, setDbReview] = useState([]);
   const [detailShow, setDetailShow] = useState(ITEMS_PER_PAGE);
-  const [data] = useState(details);
+  const [data] = useState(detailsCheck);
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState();
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,14 +66,6 @@ const Details = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const confirmHandleOpen = () => {
-    setConfirmOpen(true);
-  };
-
-  const confirmHandleClose = () => {
-    setConfirmOpen(false);
   };
 
   const settings = {
@@ -148,26 +140,12 @@ const Details = () => {
     await deleteDoc(doc(db, "ID", reivew));
   };
 
-  const onClick = (reivew) => {
-    dataDelete(reivew);
-    dataReading();
-  };
-
   const handleLoadMore = () => {
     setDetailShow((prevCount) => prevCount + ITEMS_PER_PAGE);
   };
 
   const handleLoadClose = () => {
     setDetailShow((prevCount) => prevCount - ITEMS_PER_PAGE);
-  };
-
-  const confirm = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const confirmPassPassword = () => {
-    confirmHandleClose();
-    dataReading();
   };
 
   return (
@@ -189,23 +167,7 @@ const Details = () => {
           </Typography>
         </Box>
       </Modal>
-      <Modal
-        open={confirmOpen}
-        onClose={confirmHandleClose}
-        aria-lbelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            비밀번호를 확인해주세요
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={confirmPassPassword}>
-              <input type="password" onChange={confirm} />
-            </form>
-          </Typography>
-        </Box>
-      </Modal>
+
       <div className={styles.body}>
         <h2 className={styles.title}>{games.name}</h2>
         <div className={styles.screenshots}>
@@ -216,8 +178,8 @@ const Details = () => {
           </Slider>
         </div>
         <div className={styles.details}>
-          <span> &nbsp;{details.slice(0, detailShow)}</span>
-          {detailShow < data.length && (
+          <span> &nbsp;{detailsCheck?.slice(0, detailShow)}</span>
+          {detailShow < data?.length && (
             <button
               onClick={handleLoadMore}
               style={{ border: "none", backgroundColor: "inherit" }}
@@ -243,28 +205,13 @@ const Details = () => {
         <div className={styles.review}>
           <h5 className={styles.review_title}>Review</h5>
           {dbReview.map((review, index) => (
-            <div key={index}>
-              {review.data().games === games.id ? (
-                <div>
-                  {review.data().review}
-                  <button
-                    className={styles.review_delete_btn}
-                    onClick={() => {
-                      confirmHandleOpen();
-                      console.log(review.data().password);
-                      console.log(confirmPassword);
-                      if (review.data().password === confirmPassword) {
-                        onClick(review.id);
-                      }
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
+            <Review
+              key={index}
+              review={review}
+              games={games}
+              dataDelete={dataDelete}
+              dataReading={dataReading}
+            />
           ))}
           <form className={styles.review_box} action="" onSubmit={reviewSubmit}>
             <input

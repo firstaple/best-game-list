@@ -55,10 +55,6 @@
   background-color: inherit;
 }
 
-.review_delete_btn {
-  color: red;
-}
-
 .review_box {
   position: absolute;
   bottom: 0;
