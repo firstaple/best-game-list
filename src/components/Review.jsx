@@ -53,14 +53,11 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-lbelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            비밀번호를 확인해주세요
-          </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            비밀번호를 확인해주세요
             <form onSubmit={passPassword}>
               <input type="password" onChange={confirmPassword} />
             </form>

@@ -122,7 +122,7 @@ const Details = () => {
     const filedReading = query(
       collection(db, "ID"),
       orderBy("timeStamp"),
-      limit(4)
+      limit(3)
     );
     const querySnapshot = await getDocs(filedReading);
     let array = [];
@@ -153,18 +153,15 @@ const Details = () => {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-lbelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <div>
             후기 삭제시 사용할 비밀번호를 입력해주세요
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form onSubmit={passPassword}>
               <input type="password" onChange={addPassword} />
             </form>
-          </Typography>
+          </div>
         </Box>
       </Modal>
 
@@ -195,12 +192,11 @@ const Details = () => {
               ...접기
             </button>
           )}
-          <p />
-          <span>rating : {games.rating}</span>
-          <br />
-          <span>metacritic : {games.metacritic}</span>
-          <br />
-          <span>genres : {games.genres.map((genres) => genres.name)}</span>
+          <div className={styles.detailsEvaluation}>
+            <span>rating : {games.rating}</span>
+            <span>metacritic : {games.metacritic}</span>
+            <span>genres : {games.genres.map((genres) => genres.name)}</span>
+          </div>
         </div>
         <div className={styles.review}>
           <h5 className={styles.review_title}>Review</h5>
