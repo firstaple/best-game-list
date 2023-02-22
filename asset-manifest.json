@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/best-game-list/static/css/main.74cb2009.css",
-    "main.js": "/best-game-list/static/js/main.0bdb0ca3.js",
+    "main.css": "/best-game-list/static/css/main.b2569341.css",
+    "main.js": "/best-game-list/static/js/main.36adaaeb.js",
     "static/js/787.8f309634.chunk.js": "/best-game-list/static/js/787.8f309634.chunk.js",
     "static/media/slick.svg": "/best-game-list/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/best-game-list/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/best-game-list/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/best-game-list/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/best-game-list/index.html",
-    "main.74cb2009.css.map": "/best-game-list/static/css/main.74cb2009.css.map",
-    "main.0bdb0ca3.js.map": "/best-game-list/static/js/main.0bdb0ca3.js.map",
+    "main.b2569341.css.map": "/best-game-list/static/css/main.b2569341.css.map",
+    "main.36adaaeb.js.map": "/best-game-list/static/js/main.36adaaeb.js.map",
     "787.8f309634.chunk.js.map": "/best-game-list/static/js/787.8f309634.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.74cb2009.css",
-    "static/js/main.0bdb0ca3.js"
+    "static/css/main.b2569341.css",
+    "static/js/main.36adaaeb.js"
   ]
 }
