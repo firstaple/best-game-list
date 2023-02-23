@@ -2,7 +2,6 @@
   width: 80vw;
   height: 90vh;
   margin: auto;
-  margin-top: 20px;
 }
 
 .body {
@@ -14,20 +13,12 @@
 }
 
 .title {
-  align-self: flex-start;
-  position: relative;
-  left: 25%;
-  margin: 0;
-  height: 5%;
+  align-self: center;
+  margin-top: 5px;
 }
 
 .screenshots {
   width: 50%;
-  height: 432px;
-}
-
-.screenshots div {
-  height: 100%;
 }
 
 .screenshots img {
@@ -36,6 +27,8 @@
 
 .details {
   width: 50%;
+  height: 250px;
+  overflow: auto;
   padding: 10px;
 }
 
@@ -47,9 +40,11 @@
 }
 
 .review {
+  position: sticky;
   color: orange;
   width: 50%;
-  height: 50%;
+  height: 150px;
+  overflow: auto;
 }
 
 .review_title {
@@ -64,6 +59,30 @@
 
 .review_box {
   position: absolute;
+  width: 100%;
   bottom: 0;
   margin-bottom: 10px;
+}
+
+.review_box input {
+  width: 99%;
+}
+
+@media screen and (max-width: 768px) {
+  .screenshots {
+    width: 100%;
+  }
+  .details {
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+  }
+  .review {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .review_box input {
+    width: 300px;
+  }
 }

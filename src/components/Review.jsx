@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const Review = ({ review, games, dataDelete, dataReading }) => {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState();
+  const [selectedReview, setSelectedReview] = useState(null);
 
   const style = {
     position: "absolute",
@@ -26,27 +27,23 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
 
   const passPassword = () => {
     handleClose();
+    if (selectedReview && selectedReview.data().password === password) {
+      dataDelete(selectedReview.id);
+    }
     dataReading();
   };
 
   const handleOpen = () => {
     setOpen(true);
+    setSelectedReview(review);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedReview(null);
   };
 
-  const deleteBtn = (reivew) => {
-    dataDelete(reivew);
-    dataReading();
-  };
-
-  useEffect(() => {
-    if (review.data().password === password) {
-      deleteBtn(review.id);
-    }
-  }, [dataReading]);
+  console.log(selectedReview);
 
   return (
     <div>
@@ -56,12 +53,16 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <div>
             비밀번호를 확인해주세요
             <form onSubmit={passPassword}>
-              <input type="password" onChange={confirmPassword} />
+              <input
+                type="password"
+                autoFocus={true}
+                onChange={confirmPassword}
+              />
             </form>
-          </Typography>
+          </div>
         </Box>
       </Modal>
       {review.data().games === games.id ? (

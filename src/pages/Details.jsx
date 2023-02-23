@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 // Import the functions you need from the SDKs you need
@@ -119,11 +118,7 @@ const Details = () => {
   };
 
   const dataReading = async () => {
-    const filedReading = query(
-      collection(db, "ID"),
-      orderBy("timeStamp"),
-      limit(3)
-    );
+    const filedReading = query(collection(db, "ID"), orderBy("timeStamp"));
     const querySnapshot = await getDocs(filedReading);
     let array = [];
     querySnapshot.forEach((doc) => {
@@ -159,14 +154,14 @@ const Details = () => {
           <div>
             후기 삭제시 사용할 비밀번호를 입력해주세요
             <form onSubmit={passPassword}>
-              <input type="password" onChange={addPassword} />
+              <input type="password" autoFocus={true} onChange={addPassword} />
             </form>
           </div>
         </Box>
       </Modal>
 
       <div className={styles.body}>
-        <h2 className={styles.title}>{games.name}</h2>
+        <h1 className={styles.title}>{games.name}</h1>
         <div className={styles.screenshots}>
           <Slider {...settings}>
             {games.short_screenshots.map((screenshots) => (
