@@ -8,7 +8,7 @@ import styles from "./Game.module.css";
 import { Link } from "react-router-dom";
 
 const Game = ({ games }) => {
-  const key = "2c0c9f06996a4376b75df0eaae860863";
+  const key = process.env.REACT_APP_GAME_API_KEY;
 
   const [details, setDetails] = useState();
 
@@ -25,39 +25,35 @@ const Game = ({ games }) => {
 
   return (
     <Card sx={{ width: 550 }}>
-      {games.background_image ? (
-        <Link
-          to="/details"
-          state={{
-            details: details,
-            games: games,
-          }}
-        >
-          <CardMedia sx={{ height: 250 }} image={games.background_image} />
-        </Link>
-      ) : (
-        ""
-      )}
-      <CardContent>
-        <div className={styles.game_title}>
-          <Typography gutterBottom variant="h5" component="div">
-            {games.name}
-          </Typography>
-          <Rating
-            name="half-rating-read"
-            defaultValue={games.rating}
-            precision={0.5}
-            readOnly
-          />
-        </div>
-        <Typography variant="body2" color="text.secondary">
-          {details && details.length > 100
-            ? `${details.slice(0, 100)}...`
-            : details}
+      <Link
+        to="/details"
+        state={{
+          details: details,
+          games: games,
+        }}
+      >
+        <CardMedia sx={{ height: 250 }} image={games.background_image} />
+        <CardContent>
+          <div className={styles.game_title}>
+            <Typography gutterBottom variant="h5" component="div">
+              {games.name}
+            </Typography>
+            <Rating
+              name="half-rating-read"
+              defaultValue={games.rating}
+              precision={0.5}
+              readOnly
+            />
+          </div>
+          <Typography variant="body2" color="text.secondary">
+            {details && details.length > 100
+              ? `${details.slice(0, 100)}...`
+              : details}
 
-          {/* metacritic : {games.metacritic} */}
-        </Typography>
-      </CardContent>
+            {/* metacritic : {games.metacritic} */}
+          </Typography>
+        </CardContent>
+      </Link>
     </Card>
   );
 };

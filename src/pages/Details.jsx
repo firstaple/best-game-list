@@ -5,17 +5,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { db } from "../firebase/Firebase";
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import {
-  deleteDoc,
-  getFirestore,
-  limit,
-  orderBy,
-  query,
-  serverTimestamp,
-} from "firebase/firestore";
+import { deleteDoc, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Review from "../components/Review";
@@ -23,16 +16,6 @@ import Review from "../components/Review";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const Details = () => {
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAk4QCMG3Ai_Y2mL6y8cSaSv3e6K3XBnP4",
-    authDomain: "best-game-list-193cd.firebaseapp.com",
-    projectId: "best-game-list-193cd",
-    storageBucket: "best-game-list-193cd.appspot.com",
-    messagingSenderId: "745702572321",
-    appId: "1:745702572321:web:9310249593f392c114be60",
-  };
-
   const style = {
     position: "absolute",
     top: "50%",
@@ -98,11 +81,6 @@ const Details = () => {
     dataReading();
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-
   const dataWrite = async () => {
     try {
       const docRef = await addDoc(collection(db, "ID"), {
@@ -127,13 +105,13 @@ const Details = () => {
     setDbReview(array);
   };
 
-  useEffect(() => {
-    dataReading();
-  }, []);
-
   const dataDelete = async (reivew) => {
     await deleteDoc(doc(db, "ID", reivew));
   };
+
+  useEffect(() => {
+    dataReading();
+  }, []);
 
   const handleLoadMore = () => {
     setDetailShow((prevCount) => prevCount + ITEMS_PER_PAGE);

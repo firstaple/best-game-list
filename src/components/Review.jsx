@@ -43,8 +43,6 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
     setSelectedReview(null);
   };
 
-  console.log(selectedReview);
-
   return (
     <div>
       <Modal

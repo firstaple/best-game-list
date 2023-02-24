@@ -41,10 +41,9 @@
 
 .review {
   position: sticky;
-  color: orange;
+  color: red;
   width: 50%;
   height: 150px;
-  overflow: auto;
 }
 
 .review_title {
@@ -65,7 +64,7 @@
 }
 
 .review_box input {
-  width: 99%;
+  width: 98%;
 }
 
 @media screen and (max-width: 768px) {
@@ -79,7 +78,7 @@
   }
   .review {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .review_box input {

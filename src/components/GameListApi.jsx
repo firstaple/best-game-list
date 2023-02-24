@@ -3,7 +3,7 @@ import Game from "./Game";
 import styles from "./Game.module.css";
 
 const GameListApi = () => {
-  const key = "2c0c9f06996a4376b75df0eaae860863";
+  const key = process.env.REACT_APP_GAME_API_KEY;
 
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState([]);
@@ -66,6 +66,17 @@ const GameListApi = () => {
 
   const searchBar = (e) => {
     setSearch(e.target.value);
+    // e.preventDefault();
+    // const findGame = async () => {
+    //   const json = await (
+    //     await fetch(
+    //       `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&search=${search}&key=${key}`
+    //     )
+    //   ).json();
+    //   setGames(json.results);
+    //   setLoading(false);
+    // };
+    // findGame();
   };
 
   return (
