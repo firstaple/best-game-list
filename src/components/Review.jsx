@@ -1,8 +1,7 @@
-import styles from "./Review.module.css";
+import styles from "../css/Review.module.css";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Review = ({ review, games, dataDelete, dataReading }) => {
   const [open, setOpen] = useState(false);

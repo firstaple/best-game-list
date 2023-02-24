@@ -1,3 +1,12 @@
+.loading {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+}
+
 .searchBar {
   position: relative;
   text-align: center;
@@ -23,40 +32,4 @@
 
 .game div div {
   margin-bottom: 10px;
-}
-
-.loading {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 300;
-}
-
-.game_title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.game_title span {
-  height: fit-content;
-}
-
-@media screen and (max-width: 768px) {
-  .game {
-    padding: 0 13px;
-  }
-
-  .game div div {
-    width: auto;
-  }
-
-  .game_title {
-    display: block;
-  }
-
-  .searchBar {
-    width: 250px;
-  }
 }

@@ -1,10 +1,7 @@
 import { useLocation } from "react-router-dom";
-import styles from "./Details.module.css";
+import styles from "../css/Details.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import { db } from "../firebase/Firebase";
 
 // Import the functions you need from the SDKs you need
@@ -12,22 +9,12 @@ import { deleteDoc, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Review from "../components/Review";
+import InputPassword from "../components/InputPassword";
+import Screenshots from "../components/Screenshots";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const Details = () => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
@@ -46,21 +33,6 @@ const Details = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    fade: true,
-    arrows: false,
-    autoplay: true,
-  };
-
   const addReview = (e) => {
     setReview(e.target.value);
   };
@@ -68,17 +40,6 @@ const Details = () => {
   const reviewSubmit = (e) => {
     e.preventDefault();
     handleOpen();
-  };
-
-  const addPassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const passPassword = () => {
-    handleClose();
-    dataWrite();
-    setReview("");
-    dataReading();
   };
 
   const dataWrite = async () => {
@@ -123,30 +84,17 @@ const Details = () => {
 
   return (
     <div className={styles.container}>
-      <Modal
+      <InputPassword
         open={open}
-        onClose={handleClose}
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div>
-            후기 삭제시 사용할 비밀번호를 입력해주세요
-            <form onSubmit={passPassword}>
-              <input type="password" autoFocus={true} onChange={addPassword} />
-            </form>
-          </div>
-        </Box>
-      </Modal>
-
+        dataWrite={dataWrite}
+        setPassword={setPassword}
+        setOpen={setOpen}
+        setReview={setReview}
+        dataReading={dataReading}
+      />
       <div className={styles.body}>
         <h1 className={styles.title}>{games.name}</h1>
-        <div className={styles.screenshots}>
-          <Slider {...settings}>
-            {games.short_screenshots.map((screenshots) => (
-              <img key={screenshots.id} src={screenshots.image} alt="" />
-            ))}
-          </Slider>
-        </div>
+        <Screenshots games={games} />
         <div className={styles.details}>
           <span> &nbsp;{detailsCheck?.slice(0, detailShow)}</span>
           {detailShow < data?.length && (

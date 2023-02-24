@@ -1,0 +1,13 @@
+.screenshots {
+  width: 50%;
+}
+
+.screenshots img {
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .screenshots {
+    width: 100%;
+  }
+}

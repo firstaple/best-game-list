@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
-import styles from "./Game.module.css";
+import styles from "../css/Game.module.css";
 import { Link } from "react-router-dom";
 
 const Game = ({ games }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Game from "./Game";
-import styles from "./Game.module.css";
+import styles from "../css/GameListApi.module.css";
 
 const GameListApi = () => {
   const key = process.env.REACT_APP_GAME_API_KEY;
