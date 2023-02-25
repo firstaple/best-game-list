@@ -24,9 +24,14 @@ const Game = ({ games }) => {
   }, []);
 
   return (
-    <Card sx={{ width: 550 }}>
+    <Card
+      sx={{
+        width: 550,
+      }}
+    >
       <Link
         to="/details"
+        className={styles.link}
         state={{
           details: details,
           games: games,
@@ -49,8 +54,6 @@ const Game = ({ games }) => {
             {details && details.length > 100
               ? `${details.slice(0, 100)}...`
               : details}
-
-            {/* metacritic : {games.metacritic} */}
           </Typography>
         </CardContent>
       </Link>

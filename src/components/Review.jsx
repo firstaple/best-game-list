@@ -1,4 +1,3 @@
-import styles from "../css/Review.module.css";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
@@ -66,12 +65,11 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
         <div>
           {review.data().review}
           <button
-            className={styles.review_delete_btn}
             onClick={() => {
               handleOpen();
             }}
           >
-            X
+            Delete
           </button>
         </div>
       ) : (

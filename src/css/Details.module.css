@@ -33,14 +33,20 @@
 
 .review {
   position: sticky;
-  color: red;
   width: 50%;
   height: 150px;
 }
 
 .review_title {
+  color: red;
   width: fit-content;
   margin: 0 0 10px 0;
+}
+
+.review_box {
+  overflow: auto;
+  height: 100px;
+  color: red;
 }
 
 .review button {
@@ -48,14 +54,14 @@
   background-color: inherit;
 }
 
-.review_box {
-  position: absolute;
+.input_review {
+  position: sticky;
   width: 100%;
   bottom: 0;
   margin-bottom: 10px;
 }
 
-.review_box input {
+.input_review input {
   width: 98%;
 }
 

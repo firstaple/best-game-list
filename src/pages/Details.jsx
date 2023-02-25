@@ -3,29 +3,21 @@ import styles from "../css/Details.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { db } from "../firebase/Firebase";
-
-// Import the functions you need from the SDKs you need
 import { deleteDoc, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Review from "../components/Review";
 import InputPassword from "../components/InputPassword";
 import Screenshots from "../components/Screenshots";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import Supplement from "../components/Supplement";
 
 const Details = () => {
   const location = useLocation();
   const games = location.state.games;
   const details = location.state.details;
-  const detailsCheck = details || [];
-
-  const ITEMS_PER_PAGE = 800;
 
   const [review, setReview] = useState();
   const [dbReview, setDbReview] = useState([]);
-  const [detailShow, setDetailShow] = useState(ITEMS_PER_PAGE);
-  const [data] = useState(detailsCheck);
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState();
 
@@ -74,14 +66,6 @@ const Details = () => {
     dataReading();
   }, []);
 
-  const handleLoadMore = () => {
-    setDetailShow((prevCount) => prevCount + ITEMS_PER_PAGE);
-  };
-
-  const handleLoadClose = () => {
-    setDetailShow((prevCount) => prevCount - ITEMS_PER_PAGE);
-  };
-
   return (
     <div className={styles.container}>
       <InputPassword
@@ -96,23 +80,7 @@ const Details = () => {
         <h1 className={styles.title}>{games.name}</h1>
         <Screenshots games={games} />
         <div className={styles.details}>
-          <span> &nbsp;{detailsCheck?.slice(0, detailShow)}</span>
-          {detailShow < data?.length && (
-            <button
-              onClick={handleLoadMore}
-              style={{ border: "none", backgroundColor: "inherit" }}
-            >
-              ...더보기
-            </button>
-          )}
-          {detailShow > ITEMS_PER_PAGE && (
-            <button
-              onClick={handleLoadClose}
-              style={{ border: "none", backgroundColor: "inherit" }}
-            >
-              ...접기
-            </button>
-          )}
+          <Supplement details={details} />
           <div className={styles.detailsEvaluation}>
             <span>rating : {games.rating}</span>
             <span>metacritic : {games.metacritic}</span>
@@ -121,16 +89,22 @@ const Details = () => {
         </div>
         <div className={styles.review}>
           <h5 className={styles.review_title}>Review</h5>
-          {dbReview.map((review, index) => (
-            <Review
-              key={index}
-              review={review}
-              games={games}
-              dataDelete={dataDelete}
-              dataReading={dataReading}
-            />
-          ))}
-          <form className={styles.review_box} action="" onSubmit={reviewSubmit}>
+          <div className={styles.review_box}>
+            {dbReview.map((review, index) => (
+              <Review
+                key={index}
+                review={review}
+                games={games}
+                dataDelete={dataDelete}
+                dataReading={dataReading}
+              />
+            ))}
+          </div>
+          <form
+            className={styles.input_review}
+            action=""
+            onSubmit={reviewSubmit}
+          >
             <input
               type="text"
               placeholder="Enter..."

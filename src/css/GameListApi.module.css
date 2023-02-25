@@ -33,3 +33,17 @@
 .game div div {
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .game {
+    padding: 0 13px;
+  }
+
+  .game div div {
+    width: auto;
+  }
+
+  .searchBar {
+    width: 250px;
+  }
+}
