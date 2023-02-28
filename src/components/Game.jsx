@@ -43,12 +43,15 @@ const Game = ({ games }) => {
             <Typography gutterBottom variant="h5" component="div">
               {games.name}
             </Typography>
-            <Rating
-              name="half-rating-read"
-              defaultValue={games.rating}
-              precision={0.5}
-              readOnly
-            />
+            <div className={styles.rating_box}>
+              <Rating
+                name="half-rating-read"
+                defaultValue={games.rating}
+                precision={0.5}
+                readOnly
+              />
+              <div className={styles.rating}>({games.rating})</div>
+            </div>
           </div>
           <Typography variant="body2" color="text.secondary">
             {details && details.length > 100

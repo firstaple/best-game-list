@@ -12,6 +12,14 @@
   height: fit-content;
 }
 
+.rating_box {
+  display: flex;
+}
+
+.rating {
+  margin-left: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .game_title {
     display: block;
