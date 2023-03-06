@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const Supplement = ({ details }) => {
-  const ITEMS_PER_PAGE = 800;
+  const ITEMS_PER_PAGE = 1100;
   const detailsCheck = details || [];
 
   const [detailShow, setDetailShow] = useState(ITEMS_PER_PAGE);

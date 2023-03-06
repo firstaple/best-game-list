@@ -1,85 +1,122 @@
 .container {
-  width: 80vw;
-  height: 90vh;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
-.body {
+.gridBox {
+  justify-items: center;
+  align-items: center;
+  width: 90%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  border: solid 1px black;
+}
+
+.titleBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  width: 95%;
+  height: 100%;
+}
+
+.title h1 {
+  margin: 0;
+}
+
+.screenshotsBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  width: 95%;
+  height: 100%;
+}
+
+.screenshots {
+  width: 820px;
+  height: 100%;
+}
+
+.screenshots div {
+  width: 100%;
+  height: 100%;
+}
+
+.screenshots div img {
+  width: 100%;
+  height: 100%;
+}
+
+.evaluationBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-column: 1/2;
+  grid-row: 3/4;
+  width: 95%;
+  height: 100%;
+}
+
+.evaluation {
   display: flex;
   flex-direction: column;
-  height: 45%;
-  height: fit-content;
-  align-items: center;
+  width: 95%;
+  height: 90%;
 }
 
-.title {
-  align-self: center;
-  margin-top: 5px;
+.evaluation h2 {
+  margin: 0;
+}
+
+.detailsReivewBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  grid-column: 2/3;
+  grid-row: 1/4;
+  width: 95%;
+  height: 95%;
 }
 
 .details {
-  width: 50%;
-  height: 250px;
+  width: 100%;
+  height: 60%;
   overflow: auto;
-  padding: 10px;
 }
 
-.detailsEvaluation {
-  display: flex;
-  flex-direction: column;
-  margin-top: 5px;
-  margin-bottom: 5px;
+.details h2 {
+  margin-top: 0;
 }
 
 .review {
-  position: sticky;
-  width: 50%;
-  height: 150px;
-}
-
-.review_title {
-  color: red;
-  width: fit-content;
-  margin: 0 0 10px 0;
-}
-
-.review_box {
-  overflow: auto;
-  height: 100px;
-  color: red;
-}
-
-.review button {
-  border: none;
-  background-color: inherit;
-}
-
-.input_review {
-  position: sticky;
   width: 100%;
-  bottom: 0;
-  margin-bottom: 10px;
+  height: 95%;
+  margin-top: 10px;
 }
 
-.input_review input {
-  width: 98%;
+.inputReview {
+  display: flex;
 }
 
-@media screen and (max-width: 768px) {
-  .screenshots {
-    width: 100%;
-  }
-  .details {
-    width: 100%;
-    height: 200px;
-    margin-top: 10px;
-  }
-  .review {
-    width: 100%;
-    margin-top: 20px;
-  }
+.inputReview form {
+  margin: auto;
+  width: 100%;
+}
 
-  .review_box input {
-    width: 300px;
-  }
+.inputReview input {
+  margin-left: 10px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: inherit;
 }

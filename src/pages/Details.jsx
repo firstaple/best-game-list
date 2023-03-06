@@ -66,9 +66,71 @@ const Details = () => {
     dataReading();
   }, []);
 
+  console.log(games);
+
   return (
     <div className={styles.container}>
       <InputPassword
+        open={open}
+        dataWrite={dataWrite}
+        setPassword={setPassword}
+        setOpen={setOpen}
+        setReview={setReview}
+        dataReading={dataReading}
+      />
+      <div className={styles.gridBox}>
+        <div className={styles.titleBox}>
+          <div className={styles.title}>
+            <h1>{games.name}</h1>
+          </div>
+        </div>
+        <div className={styles.screenshotsBox}>
+          <div className={styles.screenshots}>
+            <Screenshots games={games} />
+          </div>
+        </div>
+        <div className={styles.evaluationBox}>
+          <div className={styles.evaluation}>
+            <h2>Evaluation</h2>
+            <span>rating : {games.rating}</span>
+            <span>metacritic : {games.metacritic}</span>
+            <span>genres : {games.genres.map((genres) => genres.name)}</span>
+          </div>
+        </div>
+        <div className={styles.detailsReivewBox}>
+          <div className={styles.details}>
+            <h2>Details</h2>
+            <Supplement details={details} />
+          </div>
+          <div className={styles.review}>
+            <div className={styles.inputReview}>
+              <h2>Review</h2>
+              <form
+                className={styles.input_review}
+                action=""
+                onSubmit={reviewSubmit}
+              >
+                <input
+                  type="text"
+                  placeholder="Enter..."
+                  onChange={addReview}
+                  value={review || ""}
+                />
+              </form>
+            </div>
+            {dbReview.map((review, index) => (
+              <Review
+                key={index}
+                review={review}
+                games={games}
+                dataDelete={dataDelete}
+                dataReading={dataReading}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* <InputPassword
         open={open}
         dataWrite={dataWrite}
         setPassword={setPassword}
@@ -113,7 +175,7 @@ const Details = () => {
             />
           </form>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

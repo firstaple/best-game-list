@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-
+import styles from "../css/Review.module.css";
 const Review = ({ review, games, dataDelete, dataReading }) => {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState();
@@ -62,9 +62,10 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
         </Box>
       </Modal>
       {review.data().games === games.id ? (
-        <div>
+        <div className={styles.review}>
           {review.data().review}
           <button
+            className={styles.deleteReview}
             onClick={() => {
               handleOpen();
             }}

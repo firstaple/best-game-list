@@ -1,0 +1,9 @@
+.review {
+  margin-bottom: 5px;
+}
+
+.deleteReview {
+  border: none;
+  background-color: inherit;
+  color: coral;
+}

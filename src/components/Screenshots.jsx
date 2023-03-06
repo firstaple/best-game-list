@@ -1,5 +1,4 @@
 import Slider from "react-slick";
-import styles from "../css/Screenshots.module.css";
 
 const Screenshots = ({ games }) => {
   const settings = {
@@ -14,13 +13,11 @@ const Screenshots = ({ games }) => {
   };
 
   return (
-    <div className={styles.screenshots}>
-      <Slider {...settings}>
-        {games.short_screenshots.map((screenshots) => (
-          <img key={screenshots.id} src={screenshots.image} alt="" />
-        ))}
-      </Slider>
-    </div>
+    <Slider {...settings}>
+      {games.short_screenshots.map((screenshots) => (
+        <img key={screenshots.id} src={screenshots.image} alt="" />
+      ))}
+    </Slider>
   );
 };
 
