@@ -1,5 +1,15 @@
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+}
+
 .link {
   text-decoration: none;
+
   color: inherit;
 }
 
@@ -13,11 +23,7 @@
 }
 
 .rating_box {
-  display: flex;
-}
-
-.rating {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 768px) {

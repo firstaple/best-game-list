@@ -66,7 +66,7 @@ const Details = () => {
     dataReading();
   }, []);
 
-  console.log(games);
+  console.log(games.stores.filter((a) => a.store.name));
 
   return (
     <div className={styles.container}>
@@ -96,6 +96,12 @@ const Details = () => {
             <span>metacritic : {games.metacritic}</span>
             <span>genres : {games.genres.map((genres) => genres.name)}</span>
           </div>
+          <div className={styles.stores}>
+            <h2>Stores</h2>
+            {games.stores.map((a) => (
+              <span>{a.store.name}</span>
+            ))}
+          </div>
         </div>
         <div className={styles.detailsReivewBox}>
           <div className={styles.details}>
@@ -103,20 +109,8 @@ const Details = () => {
             <Supplement details={details} />
           </div>
           <div className={styles.review}>
-            <div className={styles.inputReview}>
+            <div className={styles.reviewTitle}>
               <h2>Review</h2>
-              <form
-                className={styles.input_review}
-                action=""
-                onSubmit={reviewSubmit}
-              >
-                <input
-                  type="text"
-                  placeholder="Enter..."
-                  onChange={addReview}
-                  value={review || ""}
-                />
-              </form>
             </div>
             {dbReview.map((review, index) => (
               <Review
@@ -128,6 +122,14 @@ const Details = () => {
               />
             ))}
           </div>
+          <form className={styles.reviewInput} onSubmit={reviewSubmit}>
+            <input
+              type="text"
+              placeholder="Enter..."
+              onChange={addReview}
+              value={review || ""}
+            />
+          </form>
         </div>
       </div>
       {/* <InputPassword

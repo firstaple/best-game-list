@@ -31,7 +31,7 @@ const Home = () => {
   const getGame = async () => {
     const json = await (
       await fetch(
-        `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&page_size=9&key=${key}`
+        `https://api.rawg.io/api/games?metacritic=80,100&platdorms=4&page_size=9&key=${key}`
       )
     ).json();
     setNextApi(json.next);
@@ -55,7 +55,7 @@ const Home = () => {
     const findGame = async () => {
       const json = await (
         await fetch(
-          `https://api.rawg.io/api/games?metacritic=80,100&ordering=-rating&platdorms=4&search=${search}&key=${key}`
+          `https://api.rawg.io/api/games?metacritic=80,100&platdorms=4&search=${search}&key=${key}`
         )
       ).json();
       setGames(json.results);
@@ -89,6 +89,7 @@ const Home = () => {
             <input
               className={styles.searchBar}
               type="text"
+              placeholder="Enter..."
               value={search || ""}
               onChange={searchBar}
             />
