@@ -125,6 +125,7 @@ const Details = () => {
           <form className={styles.reviewInput} onSubmit={reviewSubmit}>
             <input
               type="text"
+              required
               placeholder="Enter..."
               onChange={addReview}
               value={review || ""}

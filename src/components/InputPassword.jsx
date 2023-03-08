@@ -45,7 +45,12 @@ const InputPassword = ({
         <div>
           후기 삭제시 사용할 비밀번호를 입력해주세요
           <form onSubmit={passPassword}>
-            <input type="password" autoFocus={true} onChange={addPassword} />
+            <input
+              type="password"
+              required
+              autoFocus={true}
+              onChange={addPassword}
+            />
           </form>
         </div>
       </Box>

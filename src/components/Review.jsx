@@ -28,7 +28,6 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
     if (selectedReview && selectedReview.data().password === password) {
       dataDelete(selectedReview.id);
     }
-    dataReading();
   };
 
   const handleOpen = () => {
@@ -39,6 +38,7 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
   const handleClose = () => {
     setOpen(false);
     setSelectedReview(null);
+    dataReading();
   };
 
   return (
@@ -54,6 +54,7 @@ const Review = ({ review, games, dataDelete, dataReading }) => {
             <form onSubmit={passPassword}>
               <input
                 type="password"
+                required
                 autoFocus={true}
                 onChange={confirmPassword}
               />
