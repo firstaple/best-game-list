@@ -41,9 +41,9 @@
 }
 
 .screenshots {
-  width: 980px;
+  width: 50vw;
   /* width: 820px; */
-  height: 560px;
+  height: 60vh;
 }
 
 .screenshots div {
@@ -129,4 +129,47 @@
   border: none;
   border-bottom: 1px solid black;
   background-color: inherit;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    align-items: baseline;
+  }
+
+  .gridBox {
+    display: block;
+  }
+
+  .titleBox {
+    display: block;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 10px 0;
+  }
+
+  .screenshotsBox {
+    display: block;
+    height: fit-content;
+    width: 100%;
+  }
+
+  .screenshots {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .evaluationBox {
+    width: 100%;
+    height: fit-content;
+    margin: 10px 0 20px 0;
+  }
+
+  .review {
+    height: 50%;
+  }
+
+  .reviewInput {
+    margin-bottom: 30px;
+  }
 }
