@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# BGL (Game List)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 사용기술
 
-## Available Scripts
+- HTML
+- CSS
+- JAVASCRIPT
+- REACT
+- FIREBASE
 
-In the project directory, you can run:
+## 디자인 툴
 
-### `npm start`
+- MUI
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 배포 링크
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+https://firstaple.github.io/best-game-list
 
-### `npm test`
+## 주요 기능
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Home
+   - Video Game Database RAWG (API) : 메인화면에 게임리스트를 MUI-CARD를 이용하여 표출
+   - Skellton (MUI)를 사용하여 details의 값을 다 받아오지 않았을때 레이아웃 제공
+   - Search시 API 메소드를 변경하여 원하는 게임 검색
+   - 마우스 휠이 바닥에 닿았음을 감지하였을때 API의 NEXT를 가져옴
+2. Details
+   - Details API를 새로 받아와서 선택한 Game과 API의 ID가 같은 경우를 받아옴
+   - FIRESTORE를 이용하여 리뷰란 작성
+   - Review 삭제시 비밀번호 확인을 위해 Review작성시 포함된 passWord와 값 비

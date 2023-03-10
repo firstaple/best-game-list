@@ -133,52 +133,6 @@ const Details = () => {
           </form>
         </div>
       </div>
-      {/* <InputPassword
-        open={open}
-        dataWrite={dataWrite}
-        setPassword={setPassword}
-        setOpen={setOpen}
-        setReview={setReview}
-        dataReading={dataReading}
-      />
-      <div className={styles.body}>
-        <h1 className={styles.title}>{games.name}</h1>
-        <Screenshots games={games} />
-        <div className={styles.details}>
-          <Supplement details={details} />
-          <div className={styles.detailsEvaluation}>
-            <span>rating : {games.rating}</span>
-            <span>metacritic : {games.metacritic}</span>
-            <span>genres : {games.genres.map((genres) => genres.name)}</span>
-          </div>
-        </div>
-        <div className={styles.review}>
-          <h5 className={styles.review_title}>Review</h5>
-          <div className={styles.review_box}>
-            {dbReview.map((review, index) => (
-              <Review
-                key={index}
-                review={review}
-                games={games}
-                dataDelete={dataDelete}
-                dataReading={dataReading}
-              />
-            ))}
-          </div>
-          <form
-            className={styles.input_review}
-            action=""
-            onSubmit={reviewSubmit}
-          >
-            <input
-              type="text"
-              placeholder="Enter..."
-              onChange={addReview}
-              value={review || ""}
-            />
-          </form>
-        </div>
-      </div> */}
     </div>
   );
 };
